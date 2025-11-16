@@ -2,15 +2,19 @@ import { useState } from 'react';
 import { Scan, ShoppingCart, Zap } from 'lucide-react';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
+import { PersonalizationSettings } from './PersonalizationSettings';
+import { PersonalizationProfile } from '../types/personalization';
 
 interface ScannerProps {
   onScan: () => void;
   comparisonCount: number;
   onViewComparison?: () => void;
   onOpenCart: () => void;
+  personalizationProfile: PersonalizationProfile | null;
+  onSavePersonalization: (profile: PersonalizationProfile) => void;
 }
 
-export function Scanner({ onScan, comparisonCount, onViewComparison, onOpenCart }: ScannerProps) {
+export function Scanner({ onScan, comparisonCount, onViewComparison, onOpenCart, personalizationProfile, onSavePersonalization }: ScannerProps) {
   const [isScanning, setIsScanning] = useState(false);
 
   const handleScan = () => {
@@ -36,14 +40,20 @@ export function Scanner({ onScan, comparisonCount, onViewComparison, onOpenCart 
               <p className="text-sm text-gray-500">Smart Food Choices</p>
             </div>
           </div>
-          {comparisonCount > 0 && (
-            <button onClick={onOpenCart} className="relative">
-              <Badge variant="secondary" className="gap-1 cursor-pointer hover:bg-gray-200 transition-colors">
-                <ShoppingCart className="w-3 h-3" />
-                {comparisonCount}
-              </Badge>
-            </button>
-          )}
+          <div className="flex items-center gap-2">
+            <PersonalizationSettings 
+              profile={personalizationProfile}
+              onSave={onSavePersonalization}
+            />
+            {comparisonCount > 0 && (
+              <button onClick={onOpenCart} className="relative">
+                <Badge variant="secondary" className="gap-1 cursor-pointer hover:bg-gray-200 transition-colors">
+                  <ShoppingCart className="w-3 h-3" />
+                  {comparisonCount}
+                </Badge>
+              </button>
+            )}
+          </div>
         </div>
       </div>
 

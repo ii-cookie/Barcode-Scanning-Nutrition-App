@@ -4,6 +4,7 @@ import { ProductDetail } from './components/ProductDetail';
 import { ComparisonView } from './components/ComparisonView';
 import { ComparisonCart } from './components/ComparisonCart';
 import { Product } from './types/product';
+import { PersonalizationProfile } from './types/personalization';
 import { getRandomProduct } from './data/products';
 
 export default function App() {
@@ -11,6 +12,7 @@ export default function App() {
   const [currentProduct, setCurrentProduct] = useState<Product | null>(null);
   const [comparisonProducts, setComparisonProducts] = useState<Product[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [personalizationProfile, setPersonalizationProfile] = useState<PersonalizationProfile | null>(null);
 
   const handleScan = () => {
     const product = getRandomProduct();
@@ -59,6 +61,8 @@ export default function App() {
           comparisonCount={comparisonProducts.length}
           onViewComparison={comparisonProducts.length > 1 ? handleViewComparison : undefined}
           onOpenCart={handleOpenCart}
+          personalizationProfile={personalizationProfile}
+          onSavePersonalization={setPersonalizationProfile}
         />
       )}
       
@@ -72,6 +76,7 @@ export default function App() {
           comparisonCount={comparisonProducts.length}
           onViewComparison={comparisonProducts.length > 1 ? handleViewComparison : undefined}
           onOpenCart={handleOpenCart}
+          personalizationProfile={personalizationProfile}
         />
       )}
       

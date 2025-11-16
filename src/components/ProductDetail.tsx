@@ -3,8 +3,10 @@ import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { Card } from './ui/card';
 import { Product } from '../types/product';
+import { PersonalizationProfile } from '../types/personalization';
 import { NutrientLabel } from './NutrientLabel';
 import { VisualComparison } from './VisualComparison';
+import { PersonalizedSuitability } from './PersonalizedSuitability';
 import { HealthierAlternatives } from './HealthierAlternatives';
 import { getHealthierAlternatives } from '../data/products';
 
@@ -17,6 +19,7 @@ interface ProductDetailProps {
   comparisonCount: number;
   onViewComparison?: () => void;
   onOpenCart: () => void;
+  personalizationProfile: PersonalizationProfile | null;
 }
 
 export function ProductDetail({ 
@@ -27,7 +30,8 @@ export function ProductDetail({
   isInComparison,
   comparisonCount,
   onViewComparison,
-  onOpenCart
+  onOpenCart,
+  personalizationProfile
 }: ProductDetailProps) {
   const alternatives = getHealthierAlternatives(product.id);
   
@@ -162,6 +166,14 @@ export function ProductDetail({
         {/* Visual Comparisons */}
         <div className="px-4 pb-4">
           <VisualComparison product={product} />
+        </div>
+
+        {/* Personalized Suitability */}
+        <div className="px-4 pb-4">
+          <PersonalizedSuitability 
+            product={product}
+            profile={personalizationProfile}
+          />
         </div>
 
         {/* Healthier Alternatives */}
